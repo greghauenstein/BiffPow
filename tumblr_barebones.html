@@ -1,0 +1,146 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+	<title>
+		{block:TagPage}{Tag} - {/block:TagPage}
+		{block:SearchPage}{lang:Search results for SearchQuery} - {/block:SearchPage}
+		{block:PostSummary} {PostSummary} - {/block:PostSummary}
+		{Title}
+	</title>
+	{block:Description} 
+	<meta name="description" content="{MetaDescription}"/>
+	{/block:Description}
+
+	<meta charset="UTF-8">
+	
+	<link rel="shortcut icon" href="{Favicon}"/>
+	<link rel="alternate" type="application/rss+xml" href="{RSS}">
+	
+
+	<style>
+
+	</style>
+
+</head>
+<body>
+	
+	<header id="masthead">
+		<img src="{PortraitURL-128}"/>
+		<h1><a href="/" title="{lang:Home}">{Title}</a></h1>
+	</header>
+
+	<aside id="sidebar">
+		
+	</aside>
+
+	<div id="content">
+		{block:Posts}
+		<article>
+			{block:Text}
+			<div class="text">
+				{block:Title} <h1 class="title"><a href="{Permalink}">{Title}</a></h1>
+				{/block:Title}
+				{Body}
+			{/block:Text}
+
+			{block:Photo}
+			<div class="photo">
+				{LinkOpenTag} <img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/>
+				{LinkCloseTag}
+				{block:Caption}{Caption}{/block:Caption}			
+			{/block:Photo}
+
+			{block:Photoset}
+			<div class="photoset">
+				{Photoset-700}
+				{block:Caption}{Caption}{/block:Caption}			
+			{/block:Photoset}
+
+			{block:Quote}
+			<div class="quote">
+				<blockquote>{Quote}</blockquote>
+				{block:Source} <cite>{Source}</cite>{/block:Source}			
+			{/block:Quote}
+
+			{block:Link}
+			<div class="link">
+				<h1 class="title"><a href="{URL}">{Name}</a></h1>
+				{block:Description}{Description}{/block:Description}			
+			{/block:Link}
+
+			{block:Chat}
+			<div class="chat">
+				<ul>
+					{block:Lines} <li class="{Alt}"><p>{block:Label} <strong>{Label}</strong>{/block:Label}{Line}</p></li>{/block:Lines}
+				</ul>			
+			{/block:Chat}
+
+			{block:Audio}
+			<div class="audio">
+				{block:TrackName} <h1 class="title"><a href="{Permalink}">{TrackName}</a></h1>{/block:TrackName}
+				{block:AlbumArt} <img src="{AlbumArtURL}" width="500" height="500"/>{/block:AlbumArt}
+					{AudioPlayerBlack}
+					{block:Caption}{Caption}{/block:Caption}			
+			{/block:Audio}
+
+			{block:Video}
+			<div class="video">
+				{Video-700}
+				{block:Caption}{Caption}{/block:Caption}			
+			{/block:Video}
+
+			{block:Answer}
+			<div class="answer">
+				<h1 class="title">{Question}</h1>
+				<div class="user"><img src="{AskerPortraitURL-96}"/><p>{Asker}</p></div>
+				{Answer}			
+			{/block:Answer}
+
+			</div>
+
+			{block:Date}
+			<footer class="metadata">
+				<ul class="index">
+					<li><a href="{Permalink}"> <time datetime="{Year}--{MonthNumberWithZero}--{DayOfMonthWithZero}">{DayOfMonth} {Month} {Year}</time> </a></li>
+
+					{block:NoteCount} <li><a href="{Permalink}#notes" class="notecount">{NoteCountWithLabel}</a></li>
+					{/block:NoteCount}
+
+					{block:ContentSource}
+					<li><a href="{SourceURL}">{lang:Source}:{block:NoSourceLogo}{SourceTitle}
+					{/block:NoSourceLogo}
+					{block:SourceLogo} <img src="{BlankLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
+					{/block:SourceLogo}	</a></li>
+					{/block:ContentSource}
+				</ul>
+
+				{block:PermalinkPage}
+				{block:HasTags}
+				<ul class="tags">
+					{block:Tags} <li><a href="{TagURL}"></a></li>{/block:Tags}
+				</ul>
+				{/block:HasTags}
+
+				{block:PostNotes}
+				<div id="notes">
+					{PostNotes}
+				</div>
+				{/block:PostNotes}
+				{/block:PermalinkPage}
+			</footer>
+			{/block:Date}
+		</article>
+		{/block:Posts}
+
+		{block:Pagination}
+		<nav id="pagination">
+			<ul>
+				{block:NextPage} <li><a href="{PreviousPage}">Previous page</a></li>
+			</ul>
+		</nav>
+		{/block:Pagination}
+	</div>
+
+</body>
+</html>
