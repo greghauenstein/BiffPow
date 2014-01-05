@@ -1,2 +1,2 @@
-Tumblr-Boilerplate
+Tumblr-Barebones
 ==================
