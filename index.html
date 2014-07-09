@@ -1,146 +1,582 @@
-
 <!doctype html>
 <html lang="en">
 <head>
 	<title>
-		{block:TagPage}{Tag} - {/block:TagPage}
-		{block:SearchPage}{lang:Search results for SearchQuery} - {/block:SearchPage}
-		{block:PostSummary} {PostSummary} - {/block:PostSummary}
+		{block:TagPage}{Tag} | {/block:TagPage}
+		{block:SearchPage}{lang:Search results for SearchQuery} | {/block:SearchPage}
+		{block:PostSummary} {PostSummary} | {/block:PostSummary}
 		{Title}
 	</title>
+	
 	{block:Description} 
-	<meta name="description" content="{MetaDescription}"/>
+	    <meta name="description" content="{MetaDescription}"/>
 	{/block:Description}
 
 	<meta charset="UTF-8">
 	
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="{block:TagPage}{Tag} | {/block:TagPage}
+	{block:SearchPage}{lang:Search results for SearchQuery} | {/block:SearchPage}
+	{block:PostSummary} {PostSummary} | {/block:PostSummary}
+	{Title}" />
+	
+	{block:PermalinkPage} 
+	    <meta property="og:url" content="{Permalink}" />
+	{/block:PermalinkPage}
+	{block:IndexPage}
+	    <meta property="og:url" content="{BlogURL}" />
+	{/block:IndexPage}
+	<meta property="og:description" content="{MetaDescription}" />
+
 	<link rel="shortcut icon" href="{Favicon}"/>
 	<link rel="alternate" type="application/rss+xml" href="{RSS}">
 	
-
-	<style>
-
-	</style>
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400italic,700italic,400,700|Bangers|Shadows+Into+Light+Two' rel='stylesheet' type='text/css'>
+  <link href="http://static.tumblr.com/jaacnbq/8FWn7u0w1/csk_style.v1.0.css" rel="stylesheet" type="text/css"
 
 </head>
 <body>
 	
 	<header id="masthead">
-		<img src="{PortraitURL-128}"/>
-		<h1><a href="/" title="{lang:Home}">{Title}</a></h1>
+	    <a href="/" title="{lang:Home}">
+    		<h1 id="site-title">{Title}</h1>
+    	</a>
 	</header>
+	
+	<section id="main">
+		<div class="container">
+			<div class="row">
+				
+				<div id="content" class="col-sm-7 col-md-offset-1">{block:Posts}
+							
+					
+					{block:Text}
+					<article id="{PostID}" class="text {block:RebloggedFrom}reblog{/block:RebloggedFrom}">
+						<header class="article-header">
+						    {block:Title} 
+							<h1 class="title"><a href="{Permalink}">{Title}</a></h1>
+						{/block:Title}
+						{block:Date} 
+						    <p class="ctr caps"><strong>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</strong></p>
+						{/block:Date}
+						</header>
+						
+						<div class="article-content">
+						    {Body}
+						  
+						    {block:ContentSource}
+                            <a class="source-link" href="{SourceURL}">{lang:Source}:
+                                {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                            </a>
+                            {/block:ContentSource}
+						</div>
+						
+						<footer class="article-footer">
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+					</article>
+					{/block:Text}
+					
 
-	<aside id="sidebar">
-		
-	</aside>
-
-	<div id="content">
-		{block:Posts}
-		<article>
-			{block:Text}
-			<div class="text">
-				{block:Title} <h1 class="title"><a href="{Permalink}">{Title}</a></h1>
-				{/block:Title}
-				{Body}
-			{/block:Text}
-
-			{block:Photo}
-			<div class="photo">
-				{LinkOpenTag} <img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/>
-				{LinkCloseTag}
-				{block:Caption}{Caption}{/block:Caption}			
-			{/block:Photo}
-
-			{block:Photoset}
-			<div class="photoset">
-				{Photoset-700}
-				{block:Caption}{Caption}{/block:Caption}			
-			{/block:Photoset}
-
-			{block:Quote}
-			<div class="quote">
-				<blockquote>{Quote}</blockquote>
-				{block:Source} <cite>{Source}</cite>{/block:Source}			
-			{/block:Quote}
-
-			{block:Link}
-			<div class="link">
-				<h1 class="title"><a href="{URL}">{Name}</a></h1>
-				{block:Description}{Description}{/block:Description}			
-			{/block:Link}
-
-			{block:Chat}
-			<div class="chat">
-				<ul>
-					{block:Lines} <li class="{Alt}"><p>{block:Label} <strong>{Label}</strong>{/block:Label}{Line}</p></li>{/block:Lines}
-				</ul>			
-			{/block:Chat}
-
-			{block:Audio}
-			<div class="audio">
-				{block:TrackName} <h1 class="title"><a href="{Permalink}">{TrackName}</a></h1>{/block:TrackName}
-				{block:AlbumArt} <img src="{AlbumArtURL}" width="500" height="500"/>{/block:AlbumArt}
-					{AudioPlayerBlack}
-					{block:Caption}{Caption}{/block:Caption}			
-			{/block:Audio}
-
-			{block:Video}
-			<div class="video">
-				{Video-700}
-				{block:Caption}{Caption}{/block:Caption}			
-			{/block:Video}
-
-			{block:Answer}
-			<div class="answer">
-				<h1 class="title">{Question}</h1>
-				<div class="user"><img src="{AskerPortraitURL-96}"/><p>{Asker}</p></div>
-				{Answer}			
-			{/block:Answer}
-
+					{block:Answer}
+        			<article id="{PostID}" class="answer">
+        				<header class="article-header">
+        				    <h1 class="title"><a href="{Permalink}">
+        				        Q&A from {Asker} 
+        				    </a></h1>
+        				    {block:Date} 
+    						    <p class="ctr caps"><strong>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</strong></p>
+    						{/block:Date}
+        				</header>
+        				
+        				<div class="article-content">
+        				    <div class="question media">
+        				        <img class="media-object asker-avatar pull-left" src="{AskerPortraitURL-96}" alt="{Asker}">
+        				        <div class="media-body">
+            				        <div class="asker">
+            				            <h4 class="media-heading">{Asker} asks...</h4>
+        				            </div>
+            				        <div class="asker-question">{Question}</div>
+           				        </div>
+                            </div>
+        				        
+       				        </div>
+       				        {block:Answerer}
+                            <div class="answer media">
+                                <img class="media-object answerer-avatar pull-left" src="{AnswererPortraitURL-96}" alt="{Answerer}">
+                                <div class="media-body">
+                                    <div class="answerer">
+                                        <h4 class="media-heading">{Answerer} said...</h4>
+                                    </div>
+                                    <div class="answerer-answer">{Answer}</div>
+                                </div>
+                            </div>
+                            {/block:Answerer}
+                            
+                            <div class="replies">
+                                {Replies}
+                            </div>
+                            
+                            {block:ContentSource}
+                            <a class="source-link" href="{SourceURL}">{lang:Source}:
+                                {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                            </a>
+                            {/block:ContentSource}
+        				</div>
+        				
+        				<footer class="article-footer">
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+        			</article>
+            		{/block:Answer}
+            		
+            		{block:Link}
+        			    <article id="{PostID}" class="link">
+        				    <header class="article-header">
+            				    <h1 class="title"><a href="{URL}" target="{Target}">
+            				        {Name}
+        				        </a></h1>
+            				    {block:Date} 
+        						    <p class="ctr caps"><strong>{DayOfWeek}, {Month} {DayOfMonth}, {Year}</strong></p>
+        						{/block:Date}
+            				</header>
+        				    
+        				    <div class="article-content">
+            				    {block:Description}
+            				        {Description}
+            				        {block:Host}<p class="ctr caps"><small>{Host}</small></p>{/block:Host}
+            				    {/block:Description}
+            				    
+            				    {block:ContentSource}
+                                <a class="source-link" href="{SourceURL}">{lang:Source}:
+                                    {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                </a>
+                                {/block:ContentSource}
+        				    </div>
+        				    
+        				    <footer class="article-footer">
+    						    <ul class="list-inline pull-right">
+    						        <li>{ReblogButton size="16"}</li>
+    						        <li>{LikeButton size="16"}</li>
+    						    </ul>
+    						    
+    						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+    						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+    						    </p>
+    						    {block:HasTags}
+    						    <ul class="list-inline">
+    						        {block:Tags}
+                                        <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                    {/block:Tags}
+    						    </ul>
+    						    {/block:HasTags}
+    						    
+    						    <div class="clearfix"></div>
+					        </footer>
+					    </article>
+        			{/block:Link}
+        			
+        			{block:Photo}
+            			<article id="{PostID}" class="photo">
+            				<div class="polaroid">
+                				{LinkOpenTag} 
+                				    <img src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/>
+                				{LinkCloseTag}
+                			    {block:Caption}
+                			    	<div class="caption">
+                				        {Caption}
+                				    </div>
+                				{/block:Caption}	
+                				
+                				{block:HighRes}
+                                    <p class="ctr"><small><a href="{PhotoURL-HighRes}">
+                                        Embiggen
+                                    </a></small></p>
+                                {/block:HighRes}
+                            </div>
+                            
+                            <footer class="article-footer">
+                                {block:ContentSource}
+                                <p class="ctr"><a class="source-link" href="{SourceURL}">{lang:Source}:
+                                    {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                </a></p>
+                                {/block:ContentSource}
+                                
+    						    <ul class="list-inline pull-right">
+    						        <li>{ReblogButton size="16"}</li>
+    						        <li>{LikeButton size="16"}</li>
+    						    </ul>
+    						    
+    						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+    						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+    						    </p>
+    						    {block:HasTags}
+    						    <ul class="list-inline">
+    						        {block:Tags}
+                                        <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                    {/block:Tags}
+    						    </ul>
+    						    {/block:HasTags}
+    						    
+    						    <div class="clearfix"></div>
+    						</footer>
+            			</article>
+        			{/block:Photo}
+        			
+        			{block:Photoset}
+            			<article id="{PostID}" class="photoset">
+            				{block:Photos}
+            				    <div class="polaroid">
+                				    <img src="{PhotoURL-500}" width="{PhotoWidth-500}"height="{PhotoHeight-500}" />
+                			    {block:Caption}
+                			    	<div class="caption">
+                				        {Caption}
+                				    </div>
+                				{/block:Caption}	
+                				
+                				{block:HighRes}
+                                    <p class="ctr"><small><a href="{PhotoURL-HighRes}">
+                                        Embiggen
+                                    </a></small></p>
+                                {/block:HighRes}
+                            </div>
+                            {/block:Photos}
+                            
+                            <footer class="article-footer">
+                                {block:ContentSource}
+                                <p class="ctr"><a class="source-link" href="{SourceURL}">{lang:Source}:
+                                    {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                </a></p>
+                                {/block:ContentSource}
+                                
+    						    <ul class="list-inline pull-right">
+    						        <li>{ReblogButton size="16"}</li>
+    						        <li>{LikeButton size="16"}</li>
+    						    </ul>
+    						    
+    						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+    						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+    						    </p>
+    						    {block:HasTags}
+    						    <ul class="list-inline">
+    						        {block:Tags}
+                                        <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                    {/block:Tags}
+    						    </ul>
+    						    {/block:HasTags}
+    						    
+    						    <div class="clearfix"></div>
+    						</footer>
+            			</article>
+                    {/block:Photoset}
+        
+                    {block:Quote}
+        			<article id="{PostID}" class="quote">
+        			    <header class="article-header">
+						    {block:Source} <h1 class="title">{Source} said...</h1>{/block:Source}	
+						</header>
+						
+						<div class="article-content">
+        				    <blockquote>{Quote}</blockquote>
+        				    
+        				    {block:ContentSource}
+                                <p><a class="source-link" href="{SourceURL}">{lang:Source}:
+                                    {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                </a></p>
+                            {/block:ContentSource}
+        				</div>
+        				
+        				<footer class="article-footer">
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+        			</article>
+        			{/block:Quote}
+        			
+        			{block:Video}
+        			<article id="{PostID}" class="video">
+        				<div class="article-content">
+        				    <div class="video-container">
+        				        {Video-700}    
+        				    </div>
+        				    {block:Caption}
+        				        {Caption}
+        				    {/block:Caption}
+        				    {block:Date}
+        				        <p class="text-muted">{DayOfWeek}, {Month} {DayOfMonth}, {Year}</p>
+        				    {/block:Date}
+        				</div>
+        				
+        				<footer class="article-footer">
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+        			</article>
+        			{/block:Video}
+        			
+        			{block:Audio}
+        			<article id="{PostID}" class="audio">
+        				{block:TrackName}
+        				<header class="article-header">
+        				    <h1 class="title"><a href="{Permalink}">{TrackName}</a></h1>    
+        				</header>
+        				{/block:TrackName}
+        				
+        				<div class="article-content">
+        				    {block:AlbumArt}
+        				        <img src="{AlbumArtURL}" class="aligncenter frame" />
+        				    {/block:AlbumArt}
+        				    
+        				    {AudioPlayerBlack}
+        				    
+        				    {block:Caption}{Caption}{/block:Caption}
+        				</div>
+        				
+        				<footer class="article-footer">
+						    {block:ContentSource}
+                                <p class="ctr"><a class="source-link" href="{SourceURL}">{lang:Source}:
+                                    {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                </a></p>
+                            {/block:ContentSource}
+						    
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+        				
+        				<footer class="article-footer">
+						    <ul class="list-inline pull-right">
+						        <li>{ReblogButton size="16"}</li>
+						        <li>{LikeButton size="16"}</li>
+						    </ul>
+						    
+						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+						    </p>
+						    {block:HasTags}
+						    <ul class="list-inline">
+						        {block:Tags}
+                                    <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                {/block:Tags}
+						    </ul>
+						    {/block:HasTags}
+						    
+						    <div class="clearfix"></div>
+						</footer>
+        			</article>
+        			{/block:Audio}
+        			
+        			{block:Chat}
+    			        <article id="{PostID}" class="chat">
+    				        {block:Title}
+    				            <header class="article-header">
+                				    <h1 class="title"><a href="{Permalink}">{Title}</a></h1>    
+                				</header>
+    				        {/block:Title}
+    				        <div class="article-content">
+            				    <ul class="list-unstyled">
+        					    {block:Lines}
+        					        <li class="{Alt}">
+        					           <p>
+        					                {block:Label}<strong>{Label}:</strong>{/block:Label}
+        					                <strong>{Name}:</strong> {Line}
+        					           </p>
+        					       </li>
+        					    {/block:Lines}
+        				        </ul>
+        				    </div>
+        				    <footer class="article-footer">
+    						    {block:ContentSource}
+                                    <p class="ctr"><a class="source-link" href="{SourceURL}">{lang:Source}:
+                                        {block:NoSourceLogo}{SourceTitle}{/block:NoSourceLogo}
+                                    </a></p>
+                                {/block:ContentSource}
+    						    <ul class="list-inline pull-right">
+    						        <li>{ReblogButton size="16"}</li>
+    						        <li>{LikeButton size="16"}</li>
+    						    </ul>
+    						    
+    						    <p><a href="{PostNotesURL}">{NoteCount} Notes</a>
+    						       {block:RebloggedFrom} &middot; Reblogged from: <a href="{ReblogRootURL}" target="_blank" title="View original post '{ReblogRootTitle}' by {ReblogRootName}">{ReblogRootName}</a>{/block:RebloggedFrom}
+    						    </p>
+    						    {block:HasTags}
+    						    <ul class="list-inline">
+    						        {block:Tags}
+                                        <li><a class="tag_url" href="{TagURL}">#{Tag}</a></li>
+                                    {/block:Tags}
+    						    </ul>
+    						    {/block:HasTags}
+    						    
+    						    <div class="clearfix"></div>
+    						</footer>
+    				    </article>
+			        {/block:Chat}
+				
+				
+				{/block:Posts}</div>
+				
+				<aside id="sidebar" class="col-md-3 col-sm-5">
+				    <div class="sidebar-wrap">
+				    
+				        <div class="avatar-wrap">
+				            <img id="avatar" src="{PortraitURL-128}" class="buzz-out" />
+				        </div>
+				        {block:AskEnabled}
+				            <a href="/ask" class="btn btn-block btn-danger">{AskLabel}</a>
+				        {/block:AskEnabled}
+				        
+				        <form role="search" id="search" action="/search" method="get">
+                            <div class="input-group">
+                              <input type="text" name="q" value="{SearchQuery}" class="form-control" placeholder="Search" />
+                              <span class="input-group-btn">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                              </span>
+                            </div>
+                        </form>
+				        
+				        <small><em>{Description}</em></small>
+				        
+				        {block:Following}
+                        <h5>Following:</h5>
+                        <ul class="list-inline">
+                            {block:Followed}
+                            <li><a href="{FollowedURL}">
+                               <img src="{FollowedPortraitURL-48}" alt="{FollowedName}" />
+                                   
+                               </a></li>
+                               {/block:Followed}
+                        </ul>{/block:Following}
+				        
+				    </div><!-- /.sidebar-wrap -->
+				</aside>
+			</div><!-- /.row -->
+			
+			<div class="row">
+			    <div class="col-sm-12">
+			        {block:Pagination}
+		            <nav id="pagination">
+    			        <ul class="list-inline">
+    			            {block:PreviousPage}
+    			            <li><a class="float-shadow pagination" href="{PreviousPage}"><i class="fa fa-angle-double-left"></i> Previous page</a></li>
+    			            {/block:PreviousPage}
+    			                        
+                        	{block:NextPage}
+                        	<li><a class="float-shadow pagination" href="{NextPage}">Next page <i class="fa fa-angle-double-right"></i></a></li>
+                        	{/block:NextPage}
+                        </ul>
+		            </nav>
+		            {/block:Pagination}
+			    </div>
 			</div>
-
-			{block:Date}
-			<footer class="metadata">
-				<ul class="index">
-					<li><a href="{Permalink}"> <time datetime="{Year}--{MonthNumberWithZero}--{DayOfMonthWithZero}">{DayOfMonth} {Month} {Year}</time> </a></li>
-
-					{block:NoteCount} <li><a href="{Permalink}#notes" class="notecount">{NoteCountWithLabel}</a></li>
-					{/block:NoteCount}
-
-					{block:ContentSource}
-					<li><a href="{SourceURL}">{lang:Source}:{block:NoSourceLogo}{SourceTitle}
-					{/block:NoSourceLogo}
-					{block:SourceLogo} <img src="{BlankLogoURL}" width="{LogoWidth}" height="{LogoHeight}" alt="{SourceTitle}" />
-					{/block:SourceLogo}	</a></li>
-					{/block:ContentSource}
-				</ul>
-
-				{block:PermalinkPage}
-				{block:HasTags}
-				<ul class="tags">
-					{block:Tags} <li><a href="{TagURL}"></a></li>{/block:Tags}
-				</ul>
-				{/block:HasTags}
-
-				{block:PostNotes}
-				<div id="notes">
-					{PostNotes}
-				</div>
-				{/block:PostNotes}
-				{/block:PermalinkPage}
-			</footer>
-			{/block:Date}
-		</article>
-		{/block:Posts}
-
-		{block:Pagination}
-		<nav id="pagination">
-			<ul>
-				{block:NextPage} <li><a href="{PreviousPage}">Previous page</a></li>
-			</ul>
-		</nav>
-		{/block:Pagination}
-	</div>
-
+			
+		</div>
+	</section>
+	
+	<footer id="site-footer">
+	    
+	</footer>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script>
+	    $('.reblog_button').addClass('pop');
+	    $('.like_button').addClass('pop');
+	</script>
+	<script>
+        window.onload = function () {
+        document.body.insertAdjacentHTML( 'beforeEnd', '<iframe id="my-like-frame" style="display:none;"></iframe>' );
+        document.addEventListener( 'click', function ( event ) {
+            var myLike = event.target;
+            if( myLike.className.indexOf( 'my-like' ) > -1 ) {
+                var frame = document.getElementById( 'my-like-frame' ),
+                    liked = ( myLike.className == 'my-liked' ),
+                    command = liked ? 'unlike' : 'like',
+                    reblog = myLike.getAttribute( 'data-reblog' ),
+                    id = myLike.getAttribute( 'data-id' ),
+                    oauth = reblog.slice( -8 );
+                frame.src = 'http://www.tumblr.com/' + command + '/' + oauth + '?id=' + id;
+                liked ? myLike.className = 'my-like' : myLike.className = 'my-liked';
+            };
+        }, false );
+        };
+    </script>
 </body>
 </html>
